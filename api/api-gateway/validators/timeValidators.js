@@ -2,7 +2,7 @@ const {check} = require('express-validator');
 const { validateResult } = require('../utils/handlerValidator');
 
 const validateTimeRange = [
-    check('timeRange')
+    check('time')
         .exists()
         .withMessage('Time range is required')
         .isFloat({min:0.6, max:1})
