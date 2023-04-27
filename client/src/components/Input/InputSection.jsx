@@ -1,9 +1,13 @@
 import React from 'react'
 import Slider from './Slider/Slider'
+import { genereteScenarios } from '../../actions/actions'
 
-function InputSection({handlerClick}) {
+function InputSection() {
 
-  
+  const handlerClick = () => {
+    genereteScenarios()
+  }
+
   return (
     
         <div className='w-full '>        

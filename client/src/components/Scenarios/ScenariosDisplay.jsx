@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext} from "react";
+import ApiContext from "../../reducer-context/apiContext";
 
-function ScenariosDisplay({texts, showResults}) {
+function ScenariosDisplay() {
   
-
+  const {state} = useContext(ApiContext);
+  const {scenarios} = state;
 
   return (
     <div className="w-full h-full flex items-center justify-center border border-cyan-400 rounded">
       <div className="text-center">
-        {showResults ? (
+        {scenarios ? (
           <div className="grid grid-cols gap-4 w-80">
-            {texts.map((text, index) => (
+            {scenarios.map((text, index) => (
               <div
                 key={index}
                 className="bg-gray-400 p-4 rounded shadow-md transition duration-500 ease-in-out transform "
