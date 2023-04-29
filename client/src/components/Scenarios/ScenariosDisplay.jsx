@@ -5,11 +5,12 @@ function ScenariosDisplay() {
   
   const {state} = useContext(ApiContext);
   const {scenarios} = state;
+  console.log(scenarios)
 
   return (
     <div className="w-full h-full flex items-center justify-center border border-cyan-400 rounded">
       <div className="text-center">
-        {scenarios ? (
+        {Array.isArray(scenarios) && scenarios.length ? (
           <div className="grid grid-cols gap-4 w-80">
             {scenarios.map((text, index) => (
               <div

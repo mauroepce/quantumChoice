@@ -1,16 +1,16 @@
-import React, {useContext} from 'react';
-require("dotenv").config();
+
 import axios from "axios";
-import ApiContext from '../reducer-context/apiContext';
 
-const genereteScenariosURL = process.env.URL_GENERETE_SCENARIOS;
 
-const {dispatch} = useContext(ApiContext);
+const genereteScenariosURL = "http://localhost:3001/api-gateway/chatRoutes/generate-realities"
 
-export const genereteScenarios = async () => {
+
+export const genereteScenarios = async (dispatch, inputObject) => {
+    console.log(inputObject)
     try {
-        const response = await axios.get(genereteScenariosURL);
-        dispatch({ type: 'GENERATE_SCENARIOS', payload: response.data});
+        const response = await axios.post(genereteScenariosURL, inputObject);
+        console.log(response.data)
+        dispatch({ type: 'GENERATE_SCENARIOS', payload: response.data.results});
     } catch (error) {
         console.error('Error fetching realities:', error)
     }
