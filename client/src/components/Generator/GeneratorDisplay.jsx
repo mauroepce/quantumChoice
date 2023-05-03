@@ -13,7 +13,7 @@ function GeneratorDisplay() {
           <h1 className='text-5xl lg:text-4xl md:text-3xl sm:text-2xl xsm:text-xl filter shadow-2xl ' >Experience the power of decision-making.</h1>
           <p className='text-base my-5 text-center sm:text-sm'>Describe your decision dilemma in 200 characters or less, then select a time frame to explore possible outcomes.</p>
         </div>
-          <div className='aquivamos xsm:flex-col sm:flex-col xsm:w-full sm:w-full md:flex lg:flex xl:flex items-center justify-between xl:mt-20 lg:mt-10 md:mt-5 sm:mt-3  gap-11 sm:h-screen xsm:h-screen' style={{ height: `calc(100vh - ${50 * 4}px)` }}>
+          <div className=' xsm:flex-col sm:flex-col xsm:w-full sm:w-full md:flex lg:flex xl:flex items-center justify-between xl:mt-20 lg:mt-10 md:mt-5 sm:mt-3  gap-11 sm:h-screen xsm:h-screen' style={{ height: `calc(100vh - ${50 * 4}px)` }}>
             <div className='right xsm:order-1 sm:order-1 md:order-2 lg:order-2 xl:order-2 flex-1 w-full '>
               <ScenariosDisplay/>
             </div>
