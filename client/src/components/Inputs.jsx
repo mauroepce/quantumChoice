@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
-import Slider from './Slider/Slider'
-import { genereteScenarios } from '../../actions/actions'
-import ApiContext from '../../reducer-context/apiContext';
+import Slider from './Slider'
+import { genereteScenarios } from '../actions/actions'
+import ApiContext from '../reducer-context/apiContext';
 
 function InputSection() {
 

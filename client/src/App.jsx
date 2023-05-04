@@ -1,6 +1,6 @@
-import Footer from "./components/Footer/Footer"
-import GeneratorDisplay from "./components/Generator/GeneratorDisplay"
-import NavBar from "./components/NavBar/NavBar"
+
+import {MainContainer} from "./components/index.jsx"
+import NavBar from "./components/NavBar"
 
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
   return (
     <div className=''>
       <NavBar />
-      <GeneratorDisplay />
+      <MainContainer />
       {/* <Footer /> */}
     </div>
   )
