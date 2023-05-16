@@ -3,7 +3,7 @@ import axios from "axios";
 import { parsedRealities } from "../utils/utils";
 
 
-const genereteScenariosURL = "http://localhost:3001/api-gateway/chatRoutes/generate-realities"
+const genereteScenariosURL = "http://localhost:3001/api-gateway/chat/generate-realities"
 
 
 export const genereteScenarios = async (dispatch, inputObject) => {

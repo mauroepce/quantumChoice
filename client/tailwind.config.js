@@ -1,18 +1,19 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme')
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
     screens: {
-      'xl': {'max': '1200px'},
-      'lg': {'max': '991px'},
-      'md': {'max': '767px'},
-      'sm': {'max': '550px'},
-      'xsm': {'max': '425px'}
-    }
+      'xs': {'max': '280px'},
+      ...defaultTheme.screens,
+    },
+    extend: {
+      
+    },
+    
   },
   plugins: [],
 }

@@ -19,7 +19,8 @@ function generateQuantumChoicePrompt(decision, time) {
       { 
       "role": "user",
       "content": `${trimmedDecision}. Please provide two alternate realities that could unfold ${time} year after making my decision.`
-      }];
+      }
+    ];
 }
 
   module.exports = {generateQuantumChoicePrompt}

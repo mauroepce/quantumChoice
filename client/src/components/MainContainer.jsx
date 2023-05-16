@@ -1,30 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { headerText } from '../utils/texts'
-import Header from './base/header'
 import {ScenariosDisplay, InputSection} from './index'
+import { Box, Header } from './base'
 
 
 function MainContainer() {
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const isMdScreen = windowWidth > 768;
+  const styleHeight = isMdScreen ? `calc(100vh - ${60 * 4}px)` : `calc(100vh - ${60 * 4}px)`;
 
   return (
-    <div  className='flex flex-col  w-auto '  >
-      <div className='generator-display grid justify-items-center text-center ' >
+    <Box  className='flex flex-col  w-auto '  >
+      <Box className='generator-display grid justify-items-center text-center sm:mt-3  ' >
         
           <Header
           title={headerText.title}
           description={headerText.description}
           />
-          <div className='main-container xsm:flex-col flex-col xsm:w-full w-full md:flex lg:flex xl:flex items-center justify-between xl:mt-20 lg:mt-10 md:mt-5 mt-3  gap-11 h-screen xsm:h-screen' style={{ height: `calc(100vh - ${50 * 4}px)` }}>
-            <div className='right xsm:order-1 sm:order-1 md:order-2 lg:order-2 xl:order-2 flex-1 w-full '>
+          <Box className='main-container flex flex-col w-full items-center justify-between mt-3 gap-5 lg:gap-16  md:flex-row  md:w-[95%] lg:w-[90%] xl:w-[80%] 2xl:w-[70%]' style={{ height: styleHeight }}>
+            <Box className='right order-1 flex-1 w-full md:order-2'>
               <ScenariosDisplay/>
-            </div>
-            <div className='left xsm:w-full sm:w-full xsm:order-2 sm:order-2 md:order-1 lg:order-1 xl:order-1'>
+            </Box>
+            <Box className='left w-full order-2 md:order-1 md:w-[40%]'>
               <InputSection/>
-            </div>
-          </div>
-      </div>
-    </div>
+            </Box>
+          </Box>
+      </Box>
+    </Box>
   )
 }
 
