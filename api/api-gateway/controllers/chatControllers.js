@@ -9,7 +9,7 @@ const chatController = {
         try {
             const { prompt, time } = req.body;
             const chatGPTServiceURL = CHAT_GPT_SERVICE_URL;
-            console.log(chatGPTServiceURL)
+            
             const response = await axios.post(chatGPTServiceURL, {
                 prompt: prompt,
                 time: time

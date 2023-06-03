@@ -1,12 +1,28 @@
 const express = require('express');
+const authController = require('../controllers/auth');
+const verifyUserToken = require('../middlewares/verifyToken');
 const router = express.Router();
 
 
-// Auth routes
+/**
+ *  Create a user
+ */
 
-// TODO http://localhost:3001/api/auth/login
-// TODO http://localhost:3001/api/auth/register
+router.post("/register-user",  authController.registerController)
 
-router.post("/", register)
+
+/**
+ *  Login a user
+ */
+
+router.post("/login-user", authController.loginController)
+
+
+/**
+ *  Verify user token 
+ */
+
+router.post("/verify-user-token", verifyUserToken)
+
 
 module.exports = router;
