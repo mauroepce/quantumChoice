@@ -2,25 +2,36 @@ const axios = require('axios');
 const { matchedData } = require("express-validator");
 const { encrypt } = require("../utils/handlePassword");
 const { tokenSign } = require('../utils/handlejwt');
+const { compare } = require('bcryptjs');
 
 
-/**
- * Registrar un usuario
- * @param {*} req
- * @param {*} res
- */
+const USER_REGISTER_URL = process.env.USER_REGISTER_URL;
+const CHECK_USER_EMAIL = process.env.CHECK_USER_EMAIL;
 
 
 const authController = {
+
+    /**
+     *  Controller for registering a user
+     * @param {*} req 
+     * @param {*} res 
+     */
+
     registerController: async (req, res) => {
         try {
-            req = matchedData(req);
-            const password = await encrypt(req.password);
-            const body = { ...req, password };
-            const dataUser = await axios.post("http://localhost:3004/db-service/user/register", body)
+            // Receive the user data
+            const body = req.body
+            console.log(body)
+            const password = await encrypt(body.password);
+            const newBody = { ...body, password };
 
-            const userData = dataUser.data; // Acceder a la propiedad "data" de la respuesta
+            // 
+            const dataUser = await axios.post(USER_REGISTER_URL, newBody)
 
+
+            const userData = dataUser.data; // access to data property
+            console.log(userData)
+            // Create a property call "token" with a json web token value
             const data = {
                 token: await tokenSign(userData),
                 user: userData,
@@ -28,7 +39,67 @@ const authController = {
 
             res.status(200).send({data})
         } catch (error) {
+
             console.error(`Error while registering the "user" on DB: ${error.message}`);
+            res.status(500).json({
+                error: {
+                    message: error,
+                },
+            });
+
+        }
+    },
+
+    /**
+     *  Controller for login a user
+     * @param {*} req 
+     * @param {*} res 
+     */
+
+    loginController: async (req, res) => {
+        try {
+           
+            // Catch the email in the body
+            console.log(req.body)
+            const email = {email: req.body.email}
+            console.log(email)
+            const password  = req.body.password
+
+            // Check if user exist on DB
+            const checkUser = await axios.post(CHECK_USER_EMAIL, email)
+            // Isolate the data property
+            const user = checkUser.data;
+            console.log(user)
+            
+            // Response if user doesn't exist
+            if(!user){
+                return res.status(404).send({message: "There's no user with this email"});   
+            }
+            
+            // Check if the user login password match with the DB
+            const  passwordHashed = user.password;
+            const check = await compare(password, passwordHashed)
+          
+            // Response if passwords doesn't match
+            if(!check){
+                return res.status(401).send({message: "The password doesn't match"}); 
+            }
+
+            // Set to "undefined" the password value
+            delete user["password"]
+            console.log(user)
+
+            // Data object to respond if passwords match
+            const data = {
+                token: await tokenSign(user),
+                user
+            }
+            
+            res.status(200).send(data)
+
+        } catch (error) {
+            
+            console.error(`Error while trying to log the user: ${error.message}`);
             res.status(500).json({
                 error: {
                     message: error,
@@ -36,6 +107,8 @@ const authController = {
             });
         }
     }
+
+
 }
 
 

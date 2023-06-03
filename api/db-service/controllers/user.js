@@ -1,11 +1,16 @@
 const users = require("../models/users");
 
+/**
+ * Register a user on the DB
+ * @param {*} req 
+ * @param {*} res 
+ */
 
 const registerUserDB = async (req,res) => {
     try {
         
-        const userData = req.body
-        const userCreated = await users.create(userData)
+        const userData = req.body;
+        const userCreated = await users.create(userData);
         userCreated.set("password", undefined, {strict: false});
        
         res.status(201).send(userCreated)
@@ -19,6 +24,9 @@ const registerUserDB = async (req,res) => {
     }
 }
 
+
+
 module.exports = {
-    registerUserDB
+    registerUserDB,
+    
 }

@@ -1,5 +1,6 @@
 const {check} = require('express-validator');
-const {validateResult }= require("../utils/handleValidator")
+const { validateResult } = require('../../utils/handlerValidator');
+
 
 const validatorRegister = [
     check("name")
@@ -19,6 +20,7 @@ const validatorRegister = [
     .notEmpty()
     .isEmail(),
     (req, res, next) => {
+        
         return validateResult(req, res, next)
     }
 ];

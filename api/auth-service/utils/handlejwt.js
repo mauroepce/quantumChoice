@@ -30,7 +30,7 @@ const tokenSign = async (user) => {
 
 const verifyToken = async (tokenJwt) => {
     try {
-        return jwt.verify(tokenJwt, )
+        return jwt.verify(tokenJwt,JWT_SECRET)
     } catch (error) {
         return null;
     }
