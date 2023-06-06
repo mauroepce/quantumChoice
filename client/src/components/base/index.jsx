@@ -5,3 +5,4 @@ export { default as Option } from "./Option";
 export { default as Slider } from "./Slider";
 export { default as Text } from "./Text";
 export { default as Header } from "./Header";
+export { default as Img } from "./Image";
