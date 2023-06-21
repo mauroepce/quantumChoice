@@ -11,6 +11,10 @@
     margin: 0;
     padding: 0;
     font-family: 'Jost', sans-serif;
+    
+  }
+
+  body {
     background-color: black;
     color: white;
   }
