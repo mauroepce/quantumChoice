@@ -1,13 +1,14 @@
 const axios = require('axios');
-const { matchedData } = require("express-validator");
 const { encrypt } = require("../utils/handlePassword");
 const { tokenSign } = require('../utils/handlejwt');
 const { compare } = require('bcryptjs');
+const { v4: uuidv4 } = require('uuid');
+const nodemailer = require('nodemailer');
 
 
 const USER_REGISTER_URL = process.env.USER_REGISTER_URL;
 const CHECK_USER_EMAIL = process.env.CHECK_USER_EMAIL;
-
+const STORE_VERIFICATION_TOKEN = process.env.STORE_VERIFICATION_TOKEN;
 
 const authController = {
 
@@ -25,12 +26,20 @@ const authController = {
             const password = await encrypt(body.password);
             const newBody = { ...body, password };
 
-            // 
+            // Register the user on DB  
             const dataUser = await axios.post(USER_REGISTER_URL, newBody)
 
-
             const userData = dataUser.data; // access to data property
-         
+            
+            // Check if user registration was successful to send email verification
+            if(userData.user) {
+
+                // Generate a verification token
+                const verificationToken = uuidv4();
+
+                // Store the verification token on DB
+                const storeVerificationTokenData = await axios.post(STORE_VERIFICATION_TOKEN, {userId: userData.user._id, verificationToken});
+            }
             // Create a property call "token" with a json web token value
             const data = {
                 token: await tokenSign(userData),
@@ -70,7 +79,7 @@ const authController = {
             
             // Response if user doesn't exist
             if(!user){
-                return res.status(400).send({message: "There's no user with this email"});   
+                return res.status(400).send({error: "There's no user with this email"});   
             }
             
             // Check if the user login password match with the DB
@@ -79,7 +88,7 @@ const authController = {
           
             // Response if passwords doesn't match
             if(!check){
-                return res.status(400).send({message: "The password doesn't match"}); 
+                return res.status(400).send({error: "The password doesn't match"}); 
             }
 
             // Set to "undefined" the password value

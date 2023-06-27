@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerUserDB } = require('../controllers/user');
+const { registerUserDB, storeVerificationToken } = require('../controllers/user');
 const checkEmail = require('../middlewares/checkEmail');
 const router = express.Router();
 
@@ -13,5 +13,11 @@ router.post('/register', registerUserDB);
  */
 
 router.post('/check_email', checkEmail);
+
+/**
+ * Store the verification token on DB
+ */
+
+router.post('/store_verification_token', storeVerificationToken);
 
 module.exports = router;

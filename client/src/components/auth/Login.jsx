@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { useContext, useState } from "react";
 import ApiContext from "../../reducer-context/apiContext";
 import validate from "../../utils/validate"
+import { signIn } from "../../actions/actions";
 
 function Login() {
 
@@ -33,8 +34,8 @@ function Login() {
 
   const handlerClick = () => {
     if(errors.email === "" && errors.password === "" && user.email !== "" && user.password !== "") {
-      signUp(dispatch, user)
-      setUser({email: "", password: ""});
+      signIn(dispatch, user); 
+      setUser({...user, password: ""});
       setErrors({email:"", password: ""});
     } else {
       setAttemptedSubmit(true);

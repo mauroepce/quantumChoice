@@ -19,6 +19,10 @@ const UserScheme = new mongoose.Schema(
         role:{
             type:['user', 'admin'],
             default: 'user'
+        },
+        isVerified: {
+            type: Boolean,
+            default: false
         }
     },
     {
