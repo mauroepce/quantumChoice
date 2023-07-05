@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { headerText } from '../utils/texts'
-import {ScenariosDisplay, InputSection} from './index'
-import { Box, Header } from './base'
+import { headerText } from '../../utils/texts'
+import { Box, Header } from './../base'
+import ScenariosDisplay from "./Display"
+import InputSection from "./Inputs"
 
-
-function MainContainer() {
+function Home() {
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -43,4 +43,4 @@ function MainContainer() {
   )
 }
 
-export default MainContainer;
+export default Home;

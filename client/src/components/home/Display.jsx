@@ -1,6 +1,6 @@
 import React, { useContext, useState} from "react";
-import ApiContext from "../reducer-context/apiContext";
-import { Box, Button, Card, Option, Text } from "./base";
+import ApiContext from "../../reducer-context/apiContext";
+import { Box, Button, Card, Option, Text } from "../base";
 
 function ScenariosDisplay() {
   

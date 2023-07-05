@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize';
-import { genereteScenarios } from '../actions/actions'
-import ApiContext from '../reducer-context/apiContext';
-import { Box, Slider } from './base';
+import { genereteScenarios } from '../../actions/actions'
+import ApiContext from '../../reducer-context/apiContext';
+import { Box, Slider } from '../base';
 
 function InputSection() {
   const [textAreaValue, setTextAreaValue] = useState('');

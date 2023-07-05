@@ -4,12 +4,10 @@ const { validateResult } = require('../../utils/handlerValidator');
 
 const validatorRegister = [
     check("name")
-    .exists()
-    .notEmpty()
+    .optional()
     .isLength({min:3, max:99}),
     check("age")
-    .exists()
-    .notEmpty()
+    .optional()
     .isNumeric(),
     check("password")
     .exists()

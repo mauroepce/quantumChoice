@@ -27,10 +27,10 @@ const authController = {
         } catch (error) {
 
             console.error(`Error while trying to make register-user request to auth-service: ${error.message}`);
-            res.status(500).json({
-                error: {
-                    message: error,
-                },
+            const errorMessage = error.response.data.error
+            console.log(errorMessage)
+            res.status(400).json({
+                error: errorMessage
             });
 
         }
@@ -59,10 +59,10 @@ const authController = {
         } catch (error) {
             
             console.error(`Error while trying to make login-user request to auth-service: ${error.message}`);
-            res.status(500).json({
-                error: {
-                    message: error,
-                },
+            const errorMessage = error.response.data.error
+            console.log(errorMessage)
+            res.status(400).json({
+                error: errorMessage
             });
         }
     }

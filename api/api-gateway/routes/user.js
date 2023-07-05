@@ -17,6 +17,10 @@ router.post("/register", validatorRegister, authController.registerController)
 
 router.post("/login", validatorLogin, authController.loginController)
 
+/**
+ *  Register or login user with Google
+ */
 
+router.post("/auth-google")
 
 module.exports = router;
