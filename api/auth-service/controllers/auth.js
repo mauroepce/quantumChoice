@@ -2,7 +2,6 @@ const axios = require('axios');
 const { encrypt } = require("../utils/handlePassword");
 const { tokenSign } = require('../utils/handlejwt');
 const { compare } = require('bcryptjs');
-const { v4: uuidv4 } = require('uuid');
 const nodemailer = require('nodemailer');
 
 
@@ -31,15 +30,6 @@ const authController = {
 
             const userData = dataUser.data; // access to data property
             
-            // Check if user registration was successful to send email verification
-            if(userData.user) {
-
-                // Generate a verification token
-                const verificationToken = uuidv4();
-
-                // Store the verification token on DB
-                const storeVerificationTokenData = await axios.post(STORE_VERIFICATION_TOKEN, {userId: userData.user._id, verificationToken});
-            }
             // Create a property call "token" with a json web token value
             const data = {
                 token: await tokenSign(userData),
