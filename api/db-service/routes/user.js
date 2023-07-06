@@ -1,6 +1,7 @@
 const express = require('express');
-const { registerUserDB, storeVerificationToken } = require('../controllers/user');
+const { registerUserDB } = require('../controllers/user');
 const checkEmail = require('../middlewares/checkEmail');
+const { storeVerificationToken } = require('../utils/storeVerificationToken');
 const router = express.Router();
 
 /**

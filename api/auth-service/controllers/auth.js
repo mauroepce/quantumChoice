@@ -2,12 +2,12 @@ const axios = require('axios');
 const { encrypt } = require("../utils/handlePassword");
 const { tokenSign } = require('../utils/handlejwt');
 const { compare } = require('bcryptjs');
-const nodemailer = require('nodemailer');
-
+const { v4: uuidv4 } = require('uuid');
+const { sendVerificationEmail } = require('../utils/emailNotification');
 
 const USER_REGISTER_URL = process.env.USER_REGISTER_URL;
 const CHECK_USER_EMAIL = process.env.CHECK_USER_EMAIL;
-const STORE_VERIFICATION_TOKEN = process.env.STORE_VERIFICATION_TOKEN;
+const STORE_VERIFICATION_CODE= process.env.STORE_VERIFICATION_CODE;
 
 const authController = {
 
@@ -35,6 +35,21 @@ const authController = {
                 token: await tokenSign(userData),
                 user: userData,
             };
+
+            // Generate verification token
+            const verificationToken = uuidv4();
+
+            // Store verification token in registered-user through request to db-service
+            const storeVerificationToken = await axios.post(STORE_VERIFICATION_CODE, {userId: userData._id, verificationToken})
+
+            console.log(storeVerificationToken.data)
+            // check if the token was stored
+            const tokenStored = storeVerificationToken.data.tokenStored;
+
+            // Send verification email  if the token was stored
+            if(tokenStored) {
+               await sendVerificationEmail(userData.email, userData.verificationToken);
+            }          
 
             res.status(200).send({data})
         } catch (error) {

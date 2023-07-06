@@ -2,15 +2,23 @@
 
 const nodemailer = require("nodemailer");
 
-// Configuración de transporte de correo
+// Mail transport configuration
 const transporter = nodemailer.createTransport({
-  // Configura aquí la información de tu proveedor de correo saliente
-  // Ejemplo para usar Gmail:
+  // Set here the information of your outgoing mail provider
+  // Example to use Gmail:
   service: "gmail",
+  port: 465,
+  secure: true,
+  logger: true,
+  debug: true,
+  secureConnection: true,
   auth: {
     user: "quantumchoice.noreply@gmail.com",
-    pass: "TSw8y8MEeZqAcce",
+    pass: "zwjzqwhqizmarvnc",
   },
+  tls: {
+    rejectUnauthorized: true,
+  }
 });
 
 const sendVerificationEmail = async (email, verificationToken) => {

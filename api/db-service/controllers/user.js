@@ -1,5 +1,4 @@
 const users = require("../models/users");
-const { storeVerificationToken } = require("../utils/verificationToken");
 
 /**
  * Register a user on the DB
@@ -21,12 +20,6 @@ const registerUserDB = async (req,res) => {
         const userData = req.body;
         const userCreated = await users.create(userData);
         userCreated.set("password", undefined, {strict: false});
-
-        // Generate verification token
-        const verificationToken = uuidv4();
-        
-        // store the verification token on DB
-        await storeVerificationToken(userCreated._id, verificationToken);       
        
         res.status(201).send(userCreated)
     } catch (error) {

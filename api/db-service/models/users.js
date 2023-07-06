@@ -23,6 +23,9 @@ const UserScheme = new mongoose.Schema(
         isVerified: {
             type: Boolean,
             default: false
+        },
+        verificationToken: {
+            type: String
         }
     },
     {

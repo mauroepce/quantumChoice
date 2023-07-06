@@ -57,3 +57,15 @@ To run the front-end part of QuantumChoice, navigate to the client directory and
 ```bash
 npm run dev
 ```
+
+### Back-end
+
+To run each microservice, navigate to the respective directory and use the following command:
+
+```bash
+npm run dev
+```
+
+## License
+
+This project is licensed under the terms of the Apache 2.0 license. See the [LICENSE](./LICENSE) file.
