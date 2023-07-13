@@ -8,19 +8,25 @@ const router = express.Router();
  *  Create a user
  */
 
-router.post("/register", validatorRegister, authController.registerController)
+router.post("/register", validatorRegister, authController.registerController);
 
 
 /**
  *  Login a user
  */
 
-router.post("/login", validatorLogin, authController.loginController)
+router.post("/login", validatorLogin, authController.loginController);
 
 /**
  *  Register or login user with Google
  */
 
-router.post("/auth-google")
+router.post("/auth-google");
+
+/**
+ * Verify user from email
+ */
+
+router.post("/verify-user", authController.verifyUserController);
 
 module.exports = router;

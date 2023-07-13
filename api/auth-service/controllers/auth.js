@@ -3,12 +3,12 @@ const { encrypt } = require("../utils/handlePassword");
 const { tokenSign } = require('../utils/handlejwt');
 const { compare } = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
-const nodemailer = require('nodemailer');
-
+const { sendVerificationEmail } = require('../utils/emailNotification');
 
 const USER_REGISTER_URL = process.env.USER_REGISTER_URL;
 const CHECK_USER_EMAIL = process.env.CHECK_USER_EMAIL;
-const STORE_VERIFICATION_TOKEN = process.env.STORE_VERIFICATION_TOKEN;
+const STORE_VERIFICATION_CODE= process.env.STORE_VERIFICATION_CODE;
+const VERIFY_USER_URL = process.env.VERIFY_USER_URL;
 
 const authController = {
 
@@ -31,20 +31,26 @@ const authController = {
 
             const userData = dataUser.data; // access to data property
             
-            // Check if user registration was successful to send email verification
-            if(userData.user) {
-
-                // Generate a verification token
-                const verificationToken = uuidv4();
-
-                // Store the verification token on DB
-                const storeVerificationTokenData = await axios.post(STORE_VERIFICATION_TOKEN, {userId: userData.user._id, verificationToken});
-            }
             // Create a property call "token" with a json web token value
             const data = {
                 token: await tokenSign(userData),
                 user: userData,
             };
+
+            // Generate verification token
+            const verificationToken = uuidv4();
+
+            // Store verification token in registered-user through request to db-service
+            const storeVerificationToken = await axios.post(STORE_VERIFICATION_CODE, {userId: userData._id, verificationToken})
+
+            console.log(storeVerificationToken.data)
+            // check if the token was stored
+            const tokenStored = storeVerificationToken.data.tokenStored;
+
+            // Send verification email  if the token was stored
+            if(tokenStored) {
+               await sendVerificationEmail(userData.email, userData.verificationToken);
+            }          
 
             res.status(200).send({data})
         } catch (error) {
@@ -112,8 +118,31 @@ const authController = {
                 },
             });
         }
-    }
+    },
 
+    /**
+     * Controller for verify user token
+     * @param {*} req 
+     * @param {*} es 
+     */
+    verifyUserController: async (req, res) => {
+        try {
+            const token = req.body;
+            
+            // Verify the token
+            const tokenVerified = await axios.post(VERIFY_USER_URL, {token});
+
+
+            res.status(200).send(token);
+        } catch (error) {
+            console.error(`Error while trying to verify the token user: ${error.message}`);
+            res.status(500).json({
+                error: {
+                    message: error,
+                },
+            });
+        }
+    }
 
 }
 
