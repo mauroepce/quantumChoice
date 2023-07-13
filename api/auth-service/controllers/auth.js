@@ -8,6 +8,7 @@ const { sendVerificationEmail } = require('../utils/emailNotification');
 const USER_REGISTER_URL = process.env.USER_REGISTER_URL;
 const CHECK_USER_EMAIL = process.env.CHECK_USER_EMAIL;
 const STORE_VERIFICATION_CODE= process.env.STORE_VERIFICATION_CODE;
+const VERIFY_USER_URL = process.env.VERIFY_USER_URL;
 
 const authController = {
 
@@ -117,8 +118,31 @@ const authController = {
                 },
             });
         }
-    }
+    },
 
+    /**
+     * Controller for verify user token
+     * @param {*} req 
+     * @param {*} es 
+     */
+    verifyUserController: async (req, res) => {
+        try {
+            const token = req.body;
+            
+            // Verify the token
+            const tokenVerified = await axios.post(VERIFY_USER_URL, {token});
+
+
+            res.status(200).send(token);
+        } catch (error) {
+            console.error(`Error while trying to verify the token user: ${error.message}`);
+            res.status(500).json({
+                error: {
+                    message: error,
+                },
+            });
+        }
+    }
 
 }
 

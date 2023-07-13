@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   logger: true,
-  debug: true,
+  debug: true, 
   secureConnection: true,
   auth: {
     user: "quantumchoice.noreply@gmail.com",

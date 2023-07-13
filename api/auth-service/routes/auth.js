@@ -25,4 +25,11 @@ router.post("/login-user", authController.loginController)
 router.post("/verify-user-token", verifyUserToken)
 
 
+/**
+ * Verify user from email
+ */
+
+router.post("/verify-user", authController.verifyUserController)
+
+
 module.exports = router;
