@@ -62,8 +62,9 @@ const storeVerificationToken = async (req, res) => {
 
 const verifyUserController = async (req, res) => {
     try {
-        // Destruction the data from the request body
-        const {token} = req.body;
+        // Destructure the data from the request body
+        const token = req.body.token;
+
         
         // Find the user with the verification token
         const user = await users.findOne({verificationToken: token});
@@ -79,10 +80,21 @@ const verifyUserController = async (req, res) => {
         // Save the user
         await user.save();
 
-        res.status(200).send({message: "The user has been verified"});
+        // if the user was successfully verified
+        if(user.isVerified) {
+          res.status(200).send({message: "The user has been verified", verified: true});
+        } else {
+          res.status(404).send({error: "The user couldn't be verified", verified: false});
+        }
+
 
     } catch (error) {
-        
+        console.error(`Error while storing the verification token in the "users" collection: ${error.message}`);
+      res.status(500).json({
+        error: {
+          message: error,
+        },
+      });
     }
 }
 

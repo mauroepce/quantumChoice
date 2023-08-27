@@ -43,13 +43,12 @@ const authController = {
             // Store verification token in registered-user through request to db-service
             const storeVerificationToken = await axios.post(STORE_VERIFICATION_CODE, {userId: userData._id, verificationToken})
 
-            console.log(storeVerificationToken.data)
             // check if the token was stored
             const tokenStored = storeVerificationToken.data.tokenStored;
-
+            console.log(storeVerificationToken.data)
             // Send verification email  if the token was stored
             if(tokenStored) {
-               await sendVerificationEmail(userData.email, userData.verificationToken);
+               await sendVerificationEmail(userData.email, storeVerificationToken.data.verificationToken);
             }          
 
             res.status(200).send({data})
@@ -130,17 +129,21 @@ const authController = {
             const token = req.body;
             
             // Verify the token
-            const tokenVerified = await axios.post(VERIFY_USER_URL, {token});
+            const tokenVerified = await axios.post(VERIFY_USER_URL, token);
 
+            // Isolate the data property
+            const user = tokenVerified.data;
 
-            res.status(200).send(token);
+            
+            res.status(200).send(user);
         } catch (error) {
-            console.error(`Error while trying to verify the token user: ${error.message}`);
-            res.status(500).json({
-                error: {
-                    message: error,
-                },
+            
+            console.error(`Error while trying to verify user on DB: ${error.message}`);
+            const errorMessage = error.response.data.error;
+            res.status(400).json({
+                error: errorMessage
             });
+
         }
     }
 

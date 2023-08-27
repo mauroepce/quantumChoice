@@ -2,6 +2,8 @@
 
 const nodemailer = require("nodemailer");
 
+const FRONT_END_URL = process.env.FRONT_END_URL;
+
 // Mail transport configuration
 const transporter = nodemailer.createTransport({
   // Set here the information of your outgoing mail provider
@@ -30,7 +32,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
       html: `
         <h1>Welcome to QuantumChoice</h1>
         <p>Please, verified your email clicking the following link:</p>
-        <a href="https://www.tuweb.com/verificar-email?token=${verificationToken}">Verifiy my email</a>
+        <a href="${FRONT_END_URL}/login?token=${verificationToken}">Verifiy my email</a>
       `,
     };
 
