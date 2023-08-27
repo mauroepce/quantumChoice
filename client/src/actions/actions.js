@@ -16,6 +16,25 @@ export const genereteScenarios = async (dispatch, inputObject) => {
 
     } catch (error) {
         console.error('Error fetching realities:', error)
+        console.log(error.response)
+        if(error.response && error.response.status === 401){
+            const errorMessage = "Please sign-in or sign-up to generate scenarios";
+            
+            toast.warn(errorMessage, {
+                position: "top-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                style: {
+                    backgroundColor: 'white', 
+                    color: 'black'
+                  },
+                });
+        }
     }
 };
 

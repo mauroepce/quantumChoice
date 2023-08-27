@@ -13,9 +13,11 @@ function InputSection() {
   const handlerTextArea = (e) => {
     const value = e.target.value;
     setTextAreaValue(value);
-
-    if (value.length < 200) {
+  
+    if (value.length < 200 && value.length > 0) {
       setErrorMessage('Your input should be at least 200 characters.');
+    } else if (value.length === 0) {
+      setErrorMessage('Please complete the text area before sending.');
     } else {
       setErrorMessage('');
     }
@@ -41,7 +43,7 @@ function InputSection() {
         onChange={handlerTextArea}
         maxLength={500}
         placeholder="What would happen if I start programming right now with 19 years... (max characters: 500)" 
-        className="w-full py-3 md:h-32 focus:outline-none pl-2 h-20 border border-cyan-400 rounded max-h-40 leading-[1.2] tracking-wide text-[14px] xs:text-[11px] sm:text-[15px] md:text-[16px] font-normal"
+        className="w-full py-3 md:h-32 focus:outline-none pl-2 h-20 border border-cyan-400 rounded max-h-40 leading-[1.2] text-black tracking-wide text-[14px] xs:text-[11px] sm:text-[15px] md:text-[16px] font-normal"
       />
       {errorMessage.length > 0 && 
         <p className="text-red-300 text-sm mb-5">{errorMessage}</p>
