@@ -29,4 +29,11 @@ router.post("/auth-google");
 
 router.post("/verify-user", authController.verifyUserController);
 
+/**
+ * Check verified user
+ */
+router.post("/check-verification", authController.checkVerificationController);
+
+
+
 module.exports = router;

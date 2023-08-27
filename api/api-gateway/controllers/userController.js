@@ -23,8 +23,13 @@ const authController = {
             const dataUser = await axios.post(USER_REGISTER_URL, req)
 
             const userData = dataUser.data; // access to data property
+            console.log(userData.data.user)
+            if(userData.data.user) {
+                res.status(200).send({message: "We sent you an email, please confirm"})
+            } else {
+                res.status(400).send({error: "We couldn't register you, please try again"})
+            }
 
-            res.status(200).send(userData)
         } catch (error) {
 
             console.error(`Error while trying to make register-user request to auth-service: ${error.message}`);
@@ -93,6 +98,15 @@ const authController = {
             res.status(400).json({
                 error: errorMessage
             });
+        }
+    },
+
+
+    checkVerificationController: async (req, res) => {
+        try {
+            
+        } catch (error) {
+            
         }
     }
 

@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 
 
 const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
-console.log(import.meta.env.VITE_APP_API_BASE_URL)
 
 export const genereteScenarios = async (dispatch, inputObject) => {
     
@@ -82,5 +81,13 @@ export const signIn = async (dispatch, inputObject) => {
                   },
                 });
         }
+    }
+}
+
+export const checkUserVerification = async (dispatch) => {
+    try {
+        
+    } catch (error) {
+        
     }
 }
