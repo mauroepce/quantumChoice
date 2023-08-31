@@ -12,9 +12,11 @@ const registerUserDB = async (req,res) => {
 
         // Verify if the email is already registered
         const existingUser = await users.findOne({email});
-
-        if (existingUser !== null){
-            return res.status(400).send({error: "This email already contains a registered account"});
+      console.log(existingUser)
+        if (existingUser !== null && existingUser.isVerified === true){
+          return res.status(400).send({error: "This email already contains a registered account"});
+        } else if (existingUser !== null && !existingUser.isVerified && existingUser.verificationToken) {
+          return res.status(400).send({error: "Looks like you've already registered with this email! Please check your inbox to verify."});
         }
 
         const userData = req.body;
@@ -46,10 +48,13 @@ const storeVerificationToken = async (req, res) => {
       // Store the verification token in the DB
       const storeVerificationTokenData = await users.findByIdAndUpdate(
         userId,
-        { verificationToken }
+        { verificationToken },
+        { new: true }
       );
-  
-      res.status(200).send({storeVerificationTokenData, tokenStored: true});
+
+        const response = {storeVerificationTokenData, tokenStored: true}
+        
+      res.status(200).send(response);
     } catch (error) {
       console.error(`Error while storing the verification token in the "users" collection: ${error.message}`);
       res.status(500).json({

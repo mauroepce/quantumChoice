@@ -43,9 +43,24 @@ export const signUp = async (dispatch, inputObject) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/api-gateway/user/register`, inputObject);
 
-        const userCreated = response.data;
-
-        dispatch({ type: "USER_CREATED", payload: userCreated});
+        if(response.status === 200) {
+            const message = response.data.message;
+            console.log(message)
+            toast.info(message, {
+                position: "top-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                style: {
+                    backgroundColor: 'white', 
+                    color: 'black'
+                  },
+                });
+        }
 
     } catch (error) {
         console.error("Error trying to register user:", error)

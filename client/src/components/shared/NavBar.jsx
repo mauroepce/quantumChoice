@@ -21,7 +21,9 @@ function NavBar() {
             <ul className='hidden md:flex w-[300px] items-center justify-between'>
               <li><Text children={"Send feedback"} /></li>
               <li className='flex items-center'>
-                <Text className='px-2' children={"Sign In"} />
+                <Link to="/login">
+                  <Text className='px-2' children={"Sign In"} />
+                </Link>
               </li>
             </ul>
         </Box>

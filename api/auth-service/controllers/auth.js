@@ -44,21 +44,24 @@ const authController = {
             const storeVerificationToken = await axios.post(STORE_VERIFICATION_CODE, {userId: userData._id, verificationToken})
 
             // check if the token was stored
-            const tokenStored = storeVerificationToken.data.tokenStored;
-            console.log(storeVerificationToken.data)
+            const tokenStored = storeVerificationToken.data.storeVerificationTokenData.verificationToken;
+            
             // Send verification email  if the token was stored
             if(tokenStored) {
-               await sendVerificationEmail(userData.email, storeVerificationToken.data.verificationToken);
+               await sendVerificationEmail(userData.email, tokenStored);
             }          
 
             res.status(200).send({data})
         } catch (error) {
 
-            console.error(`Error while registering the "user" on DB: ${error.message}`);
-            const errorMessage = error.response.data.error;
-            res.status(400).json({
-                error: errorMessage
-            });
+            console.error(`Error while registering the "user" on DB: ${error.message}`)
+            console.log(error.response.data.error)
+ 
+                const errorMessage = error.response.data.error;
+                console.log(errorMessage)
+                res.status(400).json({
+                    error: errorMessage
+                });
 
         }
     },

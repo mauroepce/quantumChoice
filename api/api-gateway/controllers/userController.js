@@ -25,7 +25,7 @@ const authController = {
             const userData = dataUser.data; // access to data property
             console.log(userData.data.user)
             if(userData.data.user) {
-                res.status(200).send({message: "We sent you an email, please confirm"})
+                res.status(200).send({message: "We sent you an email, please verify your account"})
             } else {
                 res.status(400).send({error: "We couldn't register you, please try again"})
             }

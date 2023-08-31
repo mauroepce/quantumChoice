@@ -24,6 +24,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendVerificationEmail = async (email, verificationToken) => {
+  
   try {
     const mailOptions = {
       from: "quantumchoice.noreply@gmail.com",
@@ -32,7 +33,7 @@ const sendVerificationEmail = async (email, verificationToken) => {
       html: `
         <h1>Welcome to QuantumChoice</h1>
         <p>Please, verified your email clicking the following link:</p>
-        <a href="${FRONT_END_URL}/login?token=${verificationToken}">Verifiy my email</a>
+        <a href="${FRONT_END_URL}/verify-user?token=${verificationToken}">Verifiy my email</a>
       `,
     };
 
